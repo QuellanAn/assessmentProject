@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+<!-- 	<bean name="userAction" class="com.action.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean name="departmentAction" class="com.action.DepartmentAction">
+		<property name="departmentService" ref="departmentService"></property>
+	</bean>
+
+	<bean name="dutyAction" class="com.action.DutyAction">
+		<property name="dutyService" ref="dutyService"></property>
+	</bean>
+
+	<bean name="operateUserAction" class="com.action.OperateUserAction">
+		<property name="manageService" ref="manageService"></property>
+	</bean>
+
+	<bean name="manageAction" class="com.action.ManageAction">
+		<property name="manageService" ref="manageService"></property>
+	</bean> -->
+	
+<!-- 
+	<bean id="testLog" class="com.util.MyLog"></bean> 将日志类注入到bean中。
+	<aop:config>
+		<aop:aspect id="b" ref="testLog">	调用日志类
+			<aop:pointcut id="log" expression="execution(* com.action.*.*(..))" />	配置在log包下所有的类在调用之前都会被拦截
+			<aop:before pointcut-ref="log" method="before" />	在log包下面所有的类的所有方法被调用之前都调用MyLog中的before方法
+			<aop:after pointcut-ref="log" method="after" />		在log包下面所有的类的所有方法被调用之前都调用MyLog中的after方法
+		</aop:aspect>
+	</aop:config> -->
+
+</beans>

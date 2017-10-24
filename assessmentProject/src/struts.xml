@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="mngsys_default" namespace="/"
+		extends="struts-default,json-default">
+
+		<!-- 配置自定义拦截器LoginedCheckInterceptor -->
+		<interceptors>	
+			<interceptor name="loginedCheck" class="com.action.LoginInterceptor">
+			<!-- <param name="login">login</param>
+			<param name="regist"> regist </param>
+			<param name="checkVerificationCode">checkVerificationCode</param> -->
+			</interceptor>
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="loginedCheck" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mystack" />
+		<default-action-ref name="index" />
+
+		<global-results>
+			<result name="error1">/login.jsp</result>
+		</global-results>
+
+		<action name="logout" class="com.action.UserAction" method="logout">
+			<result name="success">/login.jsp</result>
+		</action>
+
+	</package>
+	<package name="systemUser1" namespace="/systemUser" extends="struts-default,json-default">
+		<action name="systemUser_*" class="com.action.UserAction"  method="{1}">
+			<result name="success">/index.jsp</result>
+			<result name="error">/login.jsp</result>
+		</action>
+	</package>
+	<package name="user1" extends="mngsys_default" namespace="/user">		
+		<action name="manager_*" class="com.action.ManageAction"
+			method="{1}">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/systemuser_update.jsp</result>
+			<result name="getSuccess">/users/users_datalist.jsp</result>
+			<result name="viewSuccess">/users/users_update.jsp</result>
+			<result name="msgSuccess">/users/users_datamsg.jsp</result>
+		</action>	
+
+		<action name="operate_*" class="com.action.OperateUserAction"
+			method="{1}">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="addSuccess">/users/users_add.jsp</result>
+			<result name="success">/users/users_main.jsp</result>
+		</action>
+	</package>
+
+	<package name="department1" extends="mngsys_default" namespace="/department">
+		<action name="department_*" class="com.action.DepartmentAction" method="{1}">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/department/department_main.jsp</result>
+			<result name="getSuccess">/department/department_datalist.jsp</result>
+			<result name="updateSuccess">/department/department_update.jsp</result>
+		</action>
+	</package>
+	
+	<package name="duty1" extends="mngsys_default" namespace="/duty">
+		<action name="duty_*" class="com.action.DutyAction" method="{1}">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/duty/duty_main.jsp</result>			
+			<result name="viewUpdateSuccess">/duty/duty_update.jsp</result>
+			<result name="getSuccess">/duty/duty_datalist.jsp</result>
+		</action>
+	</package>
+</struts>    

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	 	<!-- 启用以下包中,Spring注解的Bean -->
+	<context:annotation-config />
+	<context:component-scan base-package="com..*" />  
+	
+	    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        
+        <property name="url"
+            value="jdbc:mysql://192.168.8.14/test?useUnicode=true&amp;characterEncoding=UTF-8" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        
+        
+        <!-- 初始化连接 -->
+        <property name="initialSize">
+            <value>3</value>
+        </property>
+        <!-- 最大空闲连接 -->
+        <property name="maxIdle">
+            <value>5</value>
+        </property>
+        <!-- 最小空闲连接 -->
+        <property name="minIdle">
+            <value>2</value>
+        </property>
+        <!-- 最大连接数量 -->
+        <property name="maxActive">
+            <value>10</value>
+        </property>
+        <!-- 多少毫秒检查一次连接池中空闲的连接(由于Mysql的wait_timeout) -->
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>#{30 * 1000}</value>
+        </property>
+        <!-- 将空闲时间超过指定毫秒的连接断开,直到连接池中的连接数到minIdle为止 -->
+        <property name="minEvictableIdleTimeMillis">
+            <value>#{30 * 60 * 60 * 1000}</value>
+        </property>
+        <property name="validationQuery">
+            <value>SELECT 1</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>true</value>
+        </property>
+        
+    </bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+	
+	<bean id="userDao" class="com.dao.jdbc.UserDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+    
+    <bean id="departmentDao" class="com.dao.jdbc.DepartmentDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+    
+    <bean id="dutyDao" class="com.dao.jdbc.DutyDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+    <bean id="manageDao" class="com.dao.jdbc.ManageDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+	
+</beans>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="mngsys_default" namespace="/"
+		extends="struts-default,json-default">
+
+		<!-- 配置自定义拦截器LoginedCheckInterceptor -->
+		<interceptors>
+		
+			<interceptor name="loginedCheck" class="com.action.LoginInterceptor">
+			<!-- <param name="login">login</param>
+			<param name="regist"> regist </param>
+			<param name="checkVerificationCode">checkVerificationCode</param> -->
+			</interceptor>
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="loginedCheck" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="mystack" />
+
+		<default-action-ref name="index" />
+
+		<global-results>
+			<result name="error1">/login.jsp</result>
+		</global-results>
+
+
+		<action name="logout" class="com.action.UserAction" method="logout">
+			<result name="success">/login.jsp</result>
+		</action>
+
+	</package>
+	<package name="systemUser1" namespace="/systemUser" extends="struts-default,json-default">
+		<action name="login" class="com.action.UserAction" method="login">
+			<result name="loginSuccess">/index.jsp</result>
+			<result name="error">/login.jsp</result>
+		</action>
+		<action name="regist" class="com.action.UserAction" method="regist">
+			<result name="registSuccess">/index.jsp</result>
+			<result name="error">/login1.jsp</result>
+		</action>
+		<action name="checkVerificationCode" class="com.action.UserAction"
+			method="checkVerificationCode">
+		</action>
+	</package>
+	<package name="user1" extends="mngsys_default" namespace="/user">
+
+		
+		<action name="systemUserUpdate" class="com.action.UserAction"
+			method="systemUserUpdate">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/systemuser_update.jsp</result>
+		</action>	
+
+		<action name="getUserList" class="com.action.ManageAction"
+			method="getUserList">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_datalist.jsp</result>
+		</action>
+
+		<action name="updateViewUser" class="com.action.ManageAction"
+			method="updateViewUser">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_update.jsp</result>
+		</action>
+
+		<action name="getDepartmentList" class="com.action.ManageAction"
+			method="getDepartmentList">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+
+		<action name="getDepartmentListFirst" class="com.action.ManageAction"
+			method="getDepartmentListFirst">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+
+
+		<action name="getDutyList" class="com.action.ManageAction"
+			method="getDutyList">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+
+		<action name="deleteUser" class="com.action.ManageAction"
+			method="deleteUser">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_datalist.jsp</result>
+		</action>
+		<action name="getUserMsgById" class="com.action.ManageAction"
+			method="getUserMsgById">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_datamsg.jsp</result>
+		</action>
+		<action name="addUser" class="com.action.OperateUserAction"
+			method="addUser">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_add.jsp</result>
+		</action>
+
+		<action name="updateUser" class="com.action.OperateUserAction"
+			method="updateUser">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/users/users_main.jsp</result>
+		</action>
+
+
+		<action name="getSalary" class="com.action.OperateUserAction"
+			method="getSalary">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+		<action name="getMsgByIdcord" class="com.action.OperateUserAction"
+			method="getMsgByIdcord">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+	</package>
+
+	<package name="department1" extends="mngsys_default" namespace="/department">
+		<action name="getDepartment" class="com.action.DepartmentAction"
+			method="getDepartment">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/department/department_datalist.jsp</result>
+		</action>
+
+		<action name="addDepartment" class="com.action.DepartmentAction"
+			method="addDepartment">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/department/department_main.jsp</result>
+		</action>
+
+		<action name="deleteDepartment" class="com.action.DepartmentAction"
+			method="deleteDepartment">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+
+		<action name="updateViewDepartment" class="com.action.DepartmentAction"
+			method="updateViewDepartment">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/department/department_update.jsp</result>
+		</action>
+
+		<action name="departmentUpdate" class="com.action.DepartmentAction"
+			method="departmentUpdate">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="success">/department/department_main.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="duty1" extends="mngsys_default" namespace="/duty">
+		<!-- <action name="getDuty" class="com.action.DutyAction" method="getDuty">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="getSuccess">/duty/duty_datalist.jsp</result>
+		</action>
+
+		<action name="addDuty" class="com.action.DutyAction" method="addDuty">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="addSuccess">/duty/duty_main.jsp</result>
+			<result name="error">/duty/duty_main.jsp</result>
+		</action>
+
+		<action name="deleteDuty" class="com.action.DutyAction" method="deleteDuty">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+		</action>
+
+		<action name="updateViewDuty" class="com.action.DutyAction"
+			method="updateViewDuty">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="viewUpdateSuccess">/duty/duty_update.jsp</result>
+		</action> -->
+
+		<action name="duty_*" class="com.action.DutyAction" method="{1}">
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+			<result name="updateSuccess">/duty/duty_main.jsp</result>
+			<result name="addSuccess">/duty/duty_main.jsp</result>
+			<result name="error">/duty/duty_main.jsp</result>
+			<result name="viewUpdateSuccess">/duty/duty_update.jsp</result>
+			<result name="getSuccess">/duty/duty_datalist.jsp</result>
+		</action>
+
+	</package>
+</struts>    
